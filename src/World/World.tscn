@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://chgcs0ra15er8"]
+
+[ext_resource type="Script" path="res://src/World/World.gd" id="1_0o5f2"]
+[ext_resource type="Texture2D" uid="uid://bngtvqfv1kdp8" path="res://assets/kenney_space-shooter-redux/Backgrounds/blue.png" id="1_vsiq3"]
+[ext_resource type="PackedScene" uid="uid://dfv51mgdyt65d" path="res://src/Player/Player.tscn" id="2_piwco"]
+
+[sub_resource type="Curve2D" id="Curve2D_lf585"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1280, 0, 0, 0, 0, 0, 1280, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, -2, 1)
+}
+point_count = 5
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_0o5f2")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(640, 360)
+texture = ExtResource("1_vsiq3")
+region_enabled = true
+region_rect = Rect2(0, 0, 1280, 720)
+
+[node name="Player" parent="." instance=ExtResource("2_piwco")]
+position = Vector2(100, 200)
+max_speed = 400
+
+[node name="MeteorTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="MeteorSpawnPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_lf585")
+
+[node name="MeteorSpawnLocation" type="PathFollow2D" parent="MeteorSpawnPath"]
+position = Vector2(-1.33257, 240.94)
+rotation = -1.57358
+progress = 3759.06
+
+[connection signal="timeout" from="MeteorTimer" to="." method="_on_timer_timeout"]

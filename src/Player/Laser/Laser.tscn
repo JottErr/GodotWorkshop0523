@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://bweg6hp3se5sf"]
+
+[ext_resource type="Texture2D" uid="uid://v12t6gpwi8mh" path="res://assets/kenney_space-shooter-redux/PNG/Lasers/laserBlue07.png" id="1_fncx1"]
+[ext_resource type="Script" path="res://src/Player/Laser/Laser.gd" id="1_w6aa8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xswhv"]
+radius = 5.0
+height = 40.0
+
+[node name="Laser" type="Area2D"]
+top_level = true
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_w6aa8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_xswhv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_fncx1")
+
+[node name="Lifetime" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]
